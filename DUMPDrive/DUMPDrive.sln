@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DUMPDrive", "DUMPDrive.csproj", "{07FD9CB3-B59D-4D08-B8DE-503CEA993B96}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07FD9CB3-B59D-4D08-B8DE-503CEA993B96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07FD9CB3-B59D-4D08-B8DE-503CEA993B96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07FD9CB3-B59D-4D08-B8DE-503CEA993B96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07FD9CB3-B59D-4D08-B8DE-503CEA993B96}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC10A093-C740-4733-85BC-E109BE22AA1C}
+	EndGlobalSection
+EndGlobal
