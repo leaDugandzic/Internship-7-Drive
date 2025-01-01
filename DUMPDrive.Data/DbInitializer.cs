@@ -1,19 +1,21 @@
 ﻿using DUMPDrive.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DUMPDrive.Data;
 
 public static class DbInitializer
 {
-    public static void Seed(AppDbContext context)
+    public static void Initialize(AppDbContext context)
     {
-        if (!context.Users.Any())
+        if (context.Database.EnsureCreated())
         {
-            context.Users.Add(new User
+            var user = new User
             {
-                Email = "admin@dumpdrive.com",
-                PasswordHash = "admin123"
-            });
+                Email = "admin@example.com",
+                PasswordHash = "hashedpassword123" 
+            };
 
+            context.Users.Add(user);
             context.SaveChanges();
         }
     }
