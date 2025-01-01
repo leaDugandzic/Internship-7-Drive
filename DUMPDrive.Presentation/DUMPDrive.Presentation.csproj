@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DUMPDrive.Domain\DUMPDrive.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
