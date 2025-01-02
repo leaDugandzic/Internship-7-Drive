@@ -4,24 +4,23 @@ namespace DUMPDrive.Domain.Services;
 
 public class UserService
 {
-    private readonly List<User> _users;
+    private readonly UserRepository _userRepository;
 
-    public UserService(List<User> users)
+    public UserService(UserRepository userRepository)
     {
-        _users = users;
-    }
-
-    public User? Authenticate(string email, string passwordHash)
-    {
-        return _users.SingleOrDefault(u => u.Email == email && u.PasswordHash == passwordHash);
+        _userRepository = userRepository;
     }
 
     public bool Register(string email, string passwordHash)
     {
-        if (_users.Any(u => u.Email == email))
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(passwordHash))
             return false;
 
-        _users.Add(new User { Email = email, PasswordHash = passwordHash });
-        return true;
+        return _userRepository.AddUser(new User { Email = email, PasswordHash = passwordHash });
+    }
+
+    public User? Authenticate(string email, string passwordHash)
+    {
+        return _userRepository.GetUser(email, passwordHash);
     }
 }

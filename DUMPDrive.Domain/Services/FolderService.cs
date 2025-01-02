@@ -4,11 +4,11 @@ namespace DUMPDrive.Domain.Services;
 
 public class FolderService
 {
-    private readonly List<Folder> _folders;
+    private readonly FolderRepository _folderRepository;
 
-    public FolderService(List<Folder> folders)
+    public FolderService(FolderRepository folderRepository)
     {
-        _folders = folders;
+        _folderRepository = folderRepository;
     }
 
     public bool CreateFolder(string folderName, int ownerId)
@@ -16,18 +16,15 @@ public class FolderService
         if (string.IsNullOrWhiteSpace(folderName) || folderName.Length > 100)
             return false;
 
-        var folder = new Folder
+        return _folderRepository.AddFolder(new Folder
         {
             Name = folderName,
             OwnerId = ownerId
-        };
-
-        _folders.Add(folder);
-        return true;
+        });
     }
 
-    public List<Folder> GetUserFolders(int ownerId)
+    public List<Folder> GetFoldersForUser(int ownerId)
     {
-        return _folders.Where(f => f.OwnerId == ownerId).ToList();
+        return _folderRepository.GetFoldersByOwner(ownerId);
     }
 }
