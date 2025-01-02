@@ -1,104 +1,43 @@
-﻿using DUMPDrive.Domain.Entities;
-using DUMPDrive.Domain.Services;
+﻿using DUMPDrive.Presentation.Actions;
+using DUMPDrive.Presentation.Factories;
 
-var userService = new UserService(new List<User>());
-var folderService = new FolderService(new List<Folder>()); 
+namespace DUMPDrive.Presentation;
 
-while (true)
+class Program
 {
-    Console.WriteLine(@"
+    static void Main(string[] args)
+    {
+        var services = ServiceFactory.CreateServices();
+
+        while (true)
+        {
+            Console.WriteLine(@"
 Welcome to DUMP Drive!
 1. Login
 2. Register
 0. Exit
 Select an option: ");
 
-    var option = Console.ReadLine();
+            var option = Console.ReadLine();
 
-    switch (option)
-    {
-        case "1": 
-            Console.Write("Email: ");
-            var loginEmail = Console.ReadLine();
-
-            Console.Write("Password: ");
-            var loginPassword = Console.ReadLine();
-
-            var user = userService.Authenticate(loginEmail!, loginPassword!);
-
-            if (user != null)
+            switch (option)
             {
-                Console.WriteLine("Login successful!");
-                while (true)
-                {
-                    Console.WriteLine("\nOptions:");
-                    Console.WriteLine("1. Create folder");
-                    Console.WriteLine("2. List folders");
-                    Console.WriteLine("0. Logout");
-                    Console.Write("Choose an option: ");
-                    var action = Console.ReadLine();
+                case "1":
+                    UserActions.Login(services.UserService, services.FolderService, services.FileService, services.CommentService);
+                    break;
 
-                    if (action == "1")
-                    {
-                        Console.Write("Enter folder name: ");
-                        var folderName = Console.ReadLine();
+                case "2":
+                    UserActions.Register(services.UserService);
+                    break;
 
-                        if (folderService.CreateFolder(folderName!, user.Id))
-                            Console.WriteLine("Folder created successfully!");
-                        else
-                            Console.WriteLine("Invalid folder name.");
-                    }
-                    else if (action == "2")
-                    {
-                        var folders = folderService.GetUserFolders(user.Id);
+                case "0":
+                    Console.WriteLine("Goodbye!");
+                    return;
 
-                        if (folders.Count > 0)
-                        {
-                            Console.WriteLine("Your folders:");
-                            foreach (var folder in folders)
-                                Console.WriteLine($"- {folder.Name}");
-                        }
-                        else
-                        {
-                            Console.WriteLine("You have no folders.");
-                        }
-                    }
-                    else if (action == "0")
-                    {
-                        Console.WriteLine("Logged out.");
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid option. Please select from the menu.");
-                    }
-                }
+                default:
+                    Console.WriteLine("Invalid option. Please select numbers from the menu.");
+                    break;
             }
-            else
-            {
-                Console.WriteLine("Invalid credentials.");
-            }
-            break;
-
-        case "2": 
-            Console.Write("Email: ");
-            var registerEmail = Console.ReadLine();
-
-            Console.Write("Password: ");
-            var registerPassword = Console.ReadLine();
-
-            if (userService.Register(registerEmail!, registerPassword!))
-                Console.WriteLine("Registration successful!");
-            else
-                Console.WriteLine("Email already exists.");
-            break;
-
-        case "0": 
-            Console.WriteLine("Goodbye!");
-            return; 
-
-        default: 
-            Console.WriteLine("Invalid option. Please select numbers from menu.");
-            break;
+        }
     }
 }

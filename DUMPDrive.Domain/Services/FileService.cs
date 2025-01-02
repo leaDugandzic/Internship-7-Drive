@@ -1,32 +1,41 @@
-﻿using DUMPDrive.Domain.Entities;
+﻿using DUMPDrive.Domain.Repositories;
+using DUMPDrive.Domain.Entities;
+using DUMPDrive.Domain.Abstractions;
 
 namespace DUMPDrive.Domain.Services;
 
 public class FileService
 {
-    private readonly FileRepository _fileRepository;
+    private readonly IFileRepository _fileRepository;
 
-    public FileService(FileRepository fileRepository)
+    public FileService(IFileRepository fileRepository)
     {
         _fileRepository = fileRepository;
     }
 
-    public bool CreateFile(string fileName, string content, int folderId)
+    public bool CreateFile(string name, string content, int folderId)
     {
-        if (string.IsNullOrWhiteSpace(fileName) || fileName.Length > 50)
+        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(content))
             return false;
 
-        return _fileRepository.AddFile(new FileItem
+        var file = new FileItem
         {
-            Name = fileName,
+            Name = name,
             Content = content,
             FolderId = folderId,
             LastChanged = DateTime.Now
-        });
+        };
+
+        return _fileRepository.Add(file);
     }
 
     public List<FileItem> GetFilesInFolder(int folderId)
     {
-        return _fileRepository.GetFilesByFolder(folderId);
+        return _fileRepository.GetFilesByFolderId(folderId);
+    }
+
+    public bool EditFileContent(int fileId, string newContent)
+    {
+        return _fileRepository.EditFileContent(fileId, newContent);
     }
 }
