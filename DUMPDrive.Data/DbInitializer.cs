@@ -12,7 +12,7 @@ public static class DbInitializer
             var user = new User
             {
                 Email = "admin@example.com",
-                PasswordHash = "hashedpassword123" 
+                PasswordHash = "111" 
             };
 
             context.Users.Add(user);
